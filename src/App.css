@@ -1,0 +1,61 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.MuiTypography-root{
+  font-family: 'Nunito Sans', sans-serif !important;
+}
+
+.region-select .css-yckuxj-MuiSelect-select-MuiInputBase-input-MuiFilledInput-input:focus{
+  background-color: hsl(0, 0%, 100%) !important;
+}
+
+.region-select-dark .css-yckuxj-MuiSelect-select-MuiInputBase-input-MuiFilledInput-input:focus{
+  background-color: hsl(209, 23%, 22%) !important;
+}
+
+.search-input .MuiFilledInput-root .css-wic513-MuiInputBase-input-MuiFilledInput-input{
+  color: hsl(200, 15%, 8%) !important;
+}
+
+.search-input-dark .MuiFilledInput-root .css-wic513-MuiInputBase-input-MuiFilledInput-input{
+  color: hsl(0, 0%, 100%) !important;
+}
+.css-2k2b55-MuiInputBase-root-MuiFilledInput-root:before{
+  border-bottom: 0 !important;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
