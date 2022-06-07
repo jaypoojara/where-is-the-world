@@ -12,11 +12,17 @@ import Button from "@mui/material/Button";
 type Props = {
   country: Country;
   onCountryClick: (country: Country) => void;
+  countries: Country[]
 };
 
 export default function CountryDetail(props: Props) {
-  const { country, onCountryClick } = props;
+  const { country, onCountryClick, countries} = props;
   const theme = useTheme();
+
+  const onClickBorderCountry = (code : string) =>{
+    const selectedBorderCountry = countries.find((ele) => (ele.cca3 === code));
+    selectedBorderCountry && onCountryClick(selectedBorderCountry)
+  }
 
   return (
     <Box>
@@ -247,14 +253,17 @@ export default function CountryDetail(props: Props) {
                 >
                   Border Countries:{" "}
                 </Typography>
-                {country.borders.map((ele) => (
+                {country.borders.map((ele , index) => (
                   <Paper
                     color="text.secondary"
                     component="span"
                     style={{
                       margin: "8px",
                       padding: "8px 14px",
+                      cursor: "pointer"
                     }}
+                    key={index}
+                    onClick={() => onClickBorderCountry(ele)}
                   >
                     {ele}
                   </Paper>

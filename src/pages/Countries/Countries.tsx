@@ -1,22 +1,28 @@
-import { Box, Container } from "@mui/system";
-import { useEffect, useState } from "react";
+import SearchIcon from '@mui/icons-material/Search';
 import {
   Backdrop,
   CircularProgress,
   Grid,
   InputAdornment,
   TextField,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import MenuItem from "@mui/material/MenuItem";
+  useTheme
+} from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
 
-import Select from "@mui/material/Select";
-import { useTheme } from "@mui/material";
-import CountriesAPI from "../../api/CountriesAPI";
-import CountryCard from "../../components/CountryCard";
-import CountryDetail from "../../components/CountryDetail";
+import Select from '@mui/material/Select';
+import {
+  Box,
+  Container
+} from '@mui/system';
+import {
+  useEffect,
+  useState
+} from 'react';
+import getCountry from '../../api/CountriesAPI';
+import CountryCard from '../../components/CountryCard';
+import CountryDetail from '../../components/CountryDetail';
 import { Country } from '../../types';
-import FormControl from "@mui/material/FormControl";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -33,17 +39,22 @@ export default function Countries() {
   const theme = useTheme();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [countries, setCountries] = useState([]);
-  const [selctedCountry, setSelectedCountry] = useState({});
+  const [allCountries, setAllCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState({});
   const [search, setSearch] = useState("");
   const [region, setRegion] = useState("");
 
   const names = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
+
   const getCountryList = async (url: string) => {
     try {
       setIsLoading(true);
-      const response = await CountriesAPI.getCountry(url);
+      const response = await getCountry(url);
       if (response) {
         setCountries(response.data);
+        if(url === "/all"){
+          setAllCountries(response.data)
+        }
       }
     } catch (error) {
     } finally {
@@ -71,13 +82,14 @@ export default function Countries() {
     setSelectedCountry(country);
   };
 
-  if (selctedCountry && Object.keys(selctedCountry).length > 0) {
+  if (selectedCountry && Object.keys(selectedCountry).length > 0) {
     return (
       <Box>
         <Container maxWidth={"lg"} sx={{ paddingX: 5, paddingBottom: 5 }}>
           <CountryDetail
-            country={selctedCountry as Country}
+            country={selectedCountry as Country}
             onCountryClick={onCountryClick}
+            countries={allCountries}
           />
         </Container>
       </Box>
@@ -166,8 +178,8 @@ export default function Countries() {
         </Box>
         <Grid container marginTop={"20px"} spacing={6}>
           {countries &&
-            countries.map((country: Country) => (
-              <CountryCard country={country} onCountryClick={onCountryClick} />
+            countries.map((country: Country , index: number) => (
+              <CountryCard country={country} onCountryClick={onCountryClick} key={index} />
             ))}
         </Grid>
       </Container>
